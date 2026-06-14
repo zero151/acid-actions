@@ -148,7 +148,3 @@ uvicorn random_main:app --host 0.0.0.0 --port $PORT
 После деплоя приложение доступно по адресу:
 
 https://acid-actions.onrender.com
-
-## 📄 Лицензия
-
-MIT License

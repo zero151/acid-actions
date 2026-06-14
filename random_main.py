@@ -1,8 +1,17 @@
 from fastapi import FastAPI
 import json
 import random
-
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 rand = []
 name_file_load = "action.json"
@@ -19,13 +28,10 @@ def save_file():
         json.dump(rand,file)
 
 
-@app.get("/")
-def root():
-    return {"status": "ok", "message": "use /random"}
-
 
 @app.get("/random", summary="выбор одного и больше рандомных действий с повторениями или без")
 def get_random_action(count : int = 1, unique: bool = False):
+    print(unique)
     if not rand:
         return {"message": "no action"}
     if count < 1:
@@ -65,6 +71,12 @@ def get_all():
         all_action[i+1] = rand[i]
     return {"total": len(rand), "actions" : all_action}
 
+@app.delete("/del/all", summary = "удаление всего списка")
+def delete_all():
+    deleted = rand.clear()
+    save_file()
+    return {"message": deleted}
+
 @app.delete("/del/{index}", summary = "index начинается с 1")
 def delete_action(index: int):
     if not rand:
@@ -74,3 +86,5 @@ def delete_action(index: int):
     deleted = rand.pop(index - 1)
     save_file()
     return {"message": deleted}
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")

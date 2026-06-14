@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACID ACTIONS</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<!-- Стили -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1 class="title" data-text="ACID ACTIONS">
+        ACID ACTIONS
+    </h1>
+
+    <div class="warning">
+        Общий список действий. Все пользователи видят и изменяют одни и те же данные.
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <h2>Список действий</h2>
+            <p>Просмотр всех сохранённых действий и удаление отдельных записей.</p>
+
+            <div id="actionsList" class="actions-list">
+                Загрузка...
+            </div>
+
+            <button class="btn-danger" onclick="openDeleteAllModal()">
+                Удалить всё
+            </button>
+        </div>
+
+        <div>
+            <div class="card" style="margin-bottom:20px;">
+                <h2>Добавить действие</h2>
+                <p>Добавляет новое действие в общий список.</p>
+
+                <input id="newAction" type="text" placeholder="Введите действие...">
+
+                <button class="btn-green" onclick="addAction()">
+                    Добавить
+                </button>
+
+                <div id="addResult"></div>
+            </div>
+
+            <div class="card">
+                <h2>Случайные действия</h2>
+                <p>Получение случайных действий из общего списка.</p>
+
+                <input id="countInput" type="number" min="1" value="1">
+
+                <div class="checkbox-row">
+                    <input id="uniqueCheck" type="checkbox">
+
+                    <label for="uniqueCheck">Без повторений</label>
+
+                    <div class="tooltip">
+                        ⓘ
+                        <span>
+                            Если включено, одно действие не будет выбрано несколько раз.
+                        </span>
+                    </div>
+                </div>
+
+                <button class="btn-green" onclick="getRandomActions()">
+                    Получить
+                </button>
+
+                <div id="randomResult"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Модальное окно подтверждения удаления всего -->
+<div class="modal" id="deleteModal">
+    <div class="modal-content">
+        <h2 style="color:#ff4d9d;margin-bottom:15px;">
+            Подтверждение
+        </h2>
+
+        <p>
+            Вы уверены? Все действия будут безвозвратно удалены!
+        </p>
+
+        <div class="modal-buttons">
+            <button class="btn-delete" onclick="deleteAll()">
+                Да, удалить
+            </button>
+
+            <button class="btn-green" onclick="closeDeleteAllModal()">
+                Отмена
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Скрипты -->
+<script src="js/script.js"></script>
+
+</body>
+</html>

@@ -4,7 +4,10 @@
 
 Проект построен на FastAPI и позволяет хранить общий список действий, получать случайные действия, удалять их и управлять списком через REST API или современный веб-интерфейс.
 
-<img width="1578" height="931" alt="image" src="https://github.com/user-attachments/assets/90c4a84e-1274-49f8-bfeb-2749d509941f" />
+<img width="1115" height="901" alt="image" src="https://github.com/user-attachments/assets/07aceb5f-43db-43c7-a11e-e5749fbe3106" />
+
+<img width="1115" height="901" alt="image" src="https://github.com/user-attachments/assets/375a6327-72e3-4dca-b3e3-a475a7c3747e" />
+
 
 ## 🌐 Онлайн-версия
 

@@ -21,8 +21,8 @@ app = FastAPI(lifespan = lifespan, summary="Рандомайзер с автор
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://acid-actions.onrender.com"],
-    allow_credentials=True,
+    allow_origins=["*"],  # для разработки
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

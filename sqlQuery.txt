@@ -1,0 +1,18 @@
+-- Таблица пользователей
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,                -- автоинкрементный первичный ключ
+    username VARCHAR(255) UNIQUE NOT NULL, -- уникальное имя пользователя
+    password VARCHAR(255) NOT NULL        -- хеш пароля (в реальности храните хеш)
+);
+
+-- Таблица действий
+CREATE TABLE actions (
+    id SERIAL PRIMARY KEY,                -- автоинкрементный первичный ключ
+    text TEXT NOT NULL,                   -- текст действия
+    owner_id INTEGER NOT NULL,            -- внешний ключ на пользователя
+    CONSTRAINT fk_actions_owner 
+        FOREIGN KEY (owner_id) 
+        REFERENCES users (id) 
+        ON DELETE CASCADE                 -- при удалении пользователя удаляются его действия
+);
+ 

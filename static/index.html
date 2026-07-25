@@ -19,8 +19,21 @@
         ACID ACTIONS
     </h1>
 
-    <div class="warning">
-        Общий список действий. Все пользователи видят и изменяют одни и те же данные.
+    <!-- СТАТУС-БАР -->
+    <div id="statusBar" class="status-bar">
+        <span id="statusText">Гость</span>
+        <div id="authButtons">
+            <button class="btn-green small" onclick="openLoginModal()">Вход</button>
+            <button class="btn-green small" onclick="openRegisterModal()">Регистрация</button>
+        </div>
+        <div id="userInfo" style="display:none;">
+            <span id="userName"></span>
+            <button class="btn-delete small" onclick="logoutUser()">Выйти</button>
+        </div>
+    </div>
+
+    <div class="warning" id="warningMessage">
+        <span id="warningText">Общий список действий. Все пользователи видят и изменяют одни и те же данные.</span>
     </div>
 
     <div class="grid">
@@ -102,6 +115,38 @@
                 Отмена
             </button>
         </div>
+    </div>
+</div>
+
+<!-- Модальное окно регистрации -->
+<div class="modal" id="registerModal">
+    <div class="modal-content">
+        <h2 style="color:var(--green);">Регистрация</h2>
+        <form id="registerForm" onsubmit="event.preventDefault(); registerUser();">
+            <input type="text" id="regUsername" placeholder="Имя пользователя" required minlength="3" maxlength="30">
+            <input type="password" id="regPassword" placeholder="Пароль" required minlength="8" maxlength="72">
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:10px;">
+                <button type="submit" class="btn-green">Зарегистрироваться</button>
+                <button type="button" class="btn-delete" onclick="closeRegisterModal()">Отмена</button>
+            </div>
+            <div id="registerResult"></div>
+        </form>
+    </div>
+</div>
+
+<!-- Модальное окно входа -->
+<div class="modal" id="loginModal">
+    <div class="modal-content">
+        <h2 style="color:var(--purple);">Вход</h2>
+        <form id="loginForm" onsubmit="event.preventDefault(); loginUser();">
+            <input type="text" id="loginUsername" placeholder="Имя пользователя" required>
+            <input type="password" id="loginPassword" placeholder="Пароль" required>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:10px;">
+                <button type="submit" class="btn-green">Войти</button>
+                <button type="button" class="btn-delete" onclick="closeLoginModal()">Отмена</button>
+            </div>
+            <div id="loginResult"></div>
+        </form>
     </div>
 </div>
 

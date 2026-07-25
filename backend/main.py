@@ -1,5 +1,5 @@
+from contextlib import asynccontextmanager
 import random
-from datetime import timedelta
 from typing import List
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
@@ -7,13 +7,17 @@ from fastapi.staticfiles import StaticFiles
 from sqlmodel import Session, select, delete
 from fastapi.middleware.cors import CORSMiddleware
 # Импортируем наши слои
-from backend.database import engine
+from backend.database import create_db_and_tables
 from backend.models import User, Action
 from backend.schemas import ActionOut, MessageResponse, UserRegister, UserOut, TokenResponse, ActionCreate
 from backend.auth import get_db, password_hash, create_access_token, get_current_user
-from backend.config import settings
 
-app = FastAPI(summary="Рандомайзер с авторизацией")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    create_db_and_tables()
+    yield
+
+app = FastAPI(lifespan = lifespan, summary="Рандомайзер с авторизацией")
 
 app.add_middleware(
     CORSMiddleware,

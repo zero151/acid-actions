@@ -4,12 +4,12 @@
 
 Проект построен на **FastAPI** (бэкенд) и **чистом HTML/CSS/JS** (фронтенд). Данные хранятся в **PostgreSQL**, пароли хэшируются **Argon2**, авторизация по **JWT**.
 
-<img width="1115" height="901" alt="image" src="https://github.com/user-attachments/assets/07aceb5f-43db-43c7-a11e-e5749fbe3106" />
-<img width="1115" height="901" alt="image" src="https://github.com/user-attachments/assets/375a6327-72e3-4dca-b3e3-a475a7c3747e" />
-
 ## 🌐 Онлайн-версия
 
 [https://acid-actions.onrender.com](https://acid-actions.onrender.com)
+
+<img width="1115" height="901" alt="image" src="https://github.com/user-attachments/assets/07aceb5f-43db-43c7-a11e-e5749fbe3106" />
+<img width="1115" height="901" alt="image" src="https://github.com/user-attachments/assets/375a6327-72e3-4dca-b3e3-a475a7c3747e" />
 
 ## ✨ Возможности
 

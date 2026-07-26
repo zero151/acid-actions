@@ -1,5 +1,5 @@
 // ========== КОНФИГУРАЦИЯ ==========
-const API_BASE = "https://acid-actions.onrender.com"; 
+const API_BASE = ""; 
 
 // ========== Глобальное состояние ==========
 let token = localStorage.getItem("access_token") || null;

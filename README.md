@@ -1,154 +1,128 @@
 # Acid Actions
 
-Кислотно-чёрный киберпанк-сервис для хранения и случайного выбора действий.
+Кислотно-чёрный киберпанк-сервис для хранения и случайного выбора действий с авторизацией.
 
-Проект построен на FastAPI и позволяет хранить общий список действий, получать случайные действия, удалять их и управлять списком через REST API или современный веб-интерфейс.
+Проект построен на **FastAPI** (бэкенд) и **чистом HTML/CSS/JS** (фронтенд). Данные хранятся в **PostgreSQL**, пароли хэшируются **Argon2**, авторизация по **JWT**.
 
 <img width="1115" height="901" alt="image" src="https://github.com/user-attachments/assets/07aceb5f-43db-43c7-a11e-e5749fbe3106" />
-
 <img width="1115" height="901" alt="image" src="https://github.com/user-attachments/assets/375a6327-72e3-4dca-b3e3-a475a7c3747e" />
-
 
 ## 🌐 Онлайн-версия
 
-https://acid-actions.onrender.com
+[https://acid-actions.onrender.com](https://acid-actions.onrender.com)
 
 ## ✨ Возможности
 
-- Просмотр всех действий
-- Добавление новых действий
-- Удаление отдельных действий
-- Очистка всего списка
-- Получение случайных действий
-- Режим без повторений
-- Адаптивный интерфейс для ПК и мобильных устройств
-- Cyberpunk / Acid Black дизайн
+- Регистрация и вход (JWT)
+- Добавление действий (только для авторизованных)
+- Удаление одного или всех своих действий
+- Получение случайных действий из своего списка (с повторениями или без)
+- Гостевой режим (данные хранятся в `localStorage`)
+- Адаптивный киберпанк-дизайн
+- Полная документация API (Swagger)
 
-## 📋 Требования
+## 🚀 Запуск через Docker (рекомендуемый способ)
 
-- Python 3.8+
-- FastAPI
-- Uvicorn
+Самый простой способ — использовать Docker Compose.
 
-## 🚀 Установка
-
+### 1. Клонируйте репозиторий
 ```bash
-git clone <repository-url>
-cd <repository-name>
+git clone https://github.com/ваш-аккаунт/ваш-репозиторий.git
+cd ваш-репозиторий
+```
 
+### 2. Создайте файл `.env` в корне проекта
+Пример содержимого:
+```env
+DATABASE_URL=postgresql://postgres:password@db:5432/random
+SECRET_KEY=supersecretkeychangeit
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
+
+### 3. Запустите контейнеры
+```bash
+docker compose up -d --build
+```
+
+После этого приложение будет доступно по адресу [http://localhost:8000](http://localhost:8000).
+
+### 4. Остановка
+```bash
+docker compose down
+```
+
+## ▶️ Запуск без Docker (для разработки)
+
+### Требования
+- Python 3.12+
+- PostgreSQL (установленный локально или удалённый)
+
+### Установка
+```bash
 python -m venv venv
-
-# Linux/macOS
-source venv/bin/activate
-
-# Windows
-venv\Scripts\activate
-
+source venv/bin/activate  # или venv\Scripts\activate на Windows
 pip install -r requirements.txt
 ```
 
-## ▶️ Запуск
+### Настройка базы данных
+Создайте базу данных (например, `random`) и укажите её в `.env`:
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/random
+SECRET_KEY=ваш_секретный_ключ
+```
 
+### Запуск
 ```bash
-uvicorn random_main:app --reload
+uvicorn backend.main:app --reload
 ```
 
-После запуска приложение будет доступно по адресу:
+Откройте [http://127.0.0.1:8000](http://127.0.0.1:8000) в браузере.
 
-```text
-http://127.0.0.1:8000
-```
+## 🔧 Переменные окружения
+
+| Переменная | Описание | Пример |
+|------------|----------|--------|
+| `DATABASE_URL` | Строка подключения к PostgreSQL | `postgresql://postgres:12345@db:5432/random` |
+| `SECRET_KEY` | Секретный ключ для JWT | `my_secret_key` |
+| `ALGORITHM` | Алгоритм подписи JWT (по умолчанию `HS256`) | `HS256` |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | Время жизни токена (мин) | `30` |
 
 ## 📚 Документация API
 
-Swagger UI:
+Swagger UI доступен по адресу:
+- Локально: [http://localhost:8000/docs](http://localhost:8000/docs)
+- Онлайн: [https://acid-actions.onrender.com/docs](https://acid-actions.onrender.com/docs)
 
-```text
-http://127.0.0.1:8000/docs
-```
-Для онлайн-версии:
-
-```text
-https://acid-actions.onrender.com/docs
-```
+Основные эндпоинты:
+- `POST /register` – регистрация
+- `POST /login` – вход (получение JWT)
+- `GET /users/me` – данные текущего пользователя
+- `POST /action` – добавить действие
+- `GET /actions` – получить все свои действия
+- `DELETE /action/{id}` – удалить действие по ID
+- `DELETE /actions` – удалить все свои действия
+- `GET /random` – получить случайное действие
 
 ## 📁 Структура проекта
 
-```text
+```
 .
-├── random_main.py
-├── action.json
-├── requirements.txt
+├── backend/
+│   ├── main.py          # FastAPI приложение
+│   ├── config.py        # Настройки (pydantic-settings)
+│   ├── database.py      # Подключение к БД
+│   ├── models.py        # SQLModel модели
+│   ├── schemas.py       # Pydantic схемы
+│   └── auth.py          # JWT, хэширование
 ├── static/
 │   ├── index.html
 │   ├── css/
 │   │   └── style.css
 │   └── js/
 │       └── script.js
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
 └── README.md
 ```
-
-## 📚 API Эндпоинты
-
-| Метод | Эндпоинт | Описание |
-| :--- | :--- | :--- |
-| GET | `/` | Проверка работы API |
-| GET | `/random` | Получить случайные действия |
-| POST | `/add/{text}` | Добавить действие |
-| GET | `/all` | Получить весь список |
-| DELETE | `/del/{index}` | Удалить действие по номеру |
-| DELETE | `/del/all` | Очистить весь список |
-
-## 🔧 Примеры запросов
-
-Получить случайные действия:
-
-```http
-GET /random?count=3&unique=true
-```
-
-Добавить действие:
-
-```http
-POST /add/Пойти%20гулять
-```
-
-Удалить действие:
-
-```http
-DELETE /del/2
-```
-
-Очистить список:
-
-```http
-DELETE /del/all
-```
-
-## ⚙️ Особенности
-
-- Данные сохраняются в `action.json`
-- Все пользователи работают с одним общим списком
-- Изменения сразу видны всем пользователям
-- Поддерживается случайный выбор без повторений
-- Реализована обработка ошибок сервера и сети
-- Фронтенд работает через Fetch API
-- Интерфейс адаптирован для мобильных устройств
-
-## 🌍 Deploy на Render
-
-Команда установки:
-
-```bash
-pip install -r requirements.txt
-```
-
-Команда запуска:
-
-```bash
-uvicorn random_main:app --host 0.0.0.0 --port $PORT
-```
-
-После деплоя приложение доступно по адресу:
-
-https://acid-actions.onrender.com

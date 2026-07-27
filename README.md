@@ -39,6 +39,7 @@ SECRET_KEY=supersecretkeychangeit
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
+> **Важно:** Пароль `12345` в `DATABASE_URL` **обязательно должен совпадать** с паролем в `docker-compose.yml` (в сервисе `db` у `POSTGRES_PASSWORD`). Если вы меняете пароль там – поменяйте и здесь. Хост `db` менять **не нужно** – это имя контейнера.
 
 ### 3. Запустите контейнеры
 ```bash

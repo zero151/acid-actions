@@ -31,15 +31,25 @@ git clone https://github.com/ваш-аккаунт/ваш-репозиторий
 cd ваш-репозиторий
 ```
 
+## 🛠 Обновлённая инструкция для `.env` (работает с новым `docker-compose.yml`)
+
 ### 2. Создайте файл `.env` в корне проекта
-Пример содержимого:
+
+В нём должны быть **все переменные**, которые используются в `docker-compose.yml` и в приложении.  
+Скопируйте содержимое ниже и **подставьте свой пароль** (например, `12345`):
+
 ```env
-DATABASE_URL=postgresql://postgres:password@db:5432/random
+POSTGRES_PASSWORD=change_me
+DATABASE_URL=postgresql://postgres:change_me@db:5432/random
 SECRET_KEY=supersecretkeychangeit
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
-> **Важно:** Пароль `12345` в `DATABASE_URL` **обязательно должен совпадать** с паролем в `docker-compose.yml` (в сервисе `db` у `POSTGRES_PASSWORD`). Если вы меняете пароль там – поменяйте и здесь. Хост `db` менять **не нужно** – это имя контейнера.
+
+> **Важно:**  
+> - Пароль в `POSTGRES_PASSWORD` и в `DATABASE_URL` **должен быть одинаковым** – они оба ссылаются на один и тот же пароль базы данных.  
+> - Хост в `DATABASE_URL` **всегда `db`** – это имя контейнера PostgreSQL в Docker, менять его не нужно.  
+> - Если вы хотите другой пароль – поменяйте его **в обоих местах** и перезапустите контейнеры.
 
 ### 3. Запустите контейнеры
 ```bash

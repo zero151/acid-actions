@@ -94,7 +94,8 @@ uvicorn backend.main:app --reload
 
 | Переменная | Описание | Пример |
 |------------|----------|--------|
-| `DATABASE_URL` | Строка подключения к PostgreSQL | `postgresql://postgres:12345@db:5432/random` |
+| `POSTGRES_PASSWORD` | Пароль от базы данных для Docker compose | `change_me` |
+| `DATABASE_URL` | Строка подключения к PostgreSQL | `postgresql://postgres:change_me@db:5432/random` |
 | `SECRET_KEY` | Секретный ключ для JWT | `my_secret_key` |
 | `ALGORITHM` | Алгоритм подписи JWT (по умолчанию `HS256`) | `HS256` |
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | Время жизни токена (мин) | `30` |
